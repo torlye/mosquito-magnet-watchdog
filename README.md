@@ -2,7 +2,7 @@
 Arduino-based watchdog for Mosquito Magnet Pioneer that keeps the trap from stopping
 
 ## The problem
-The Mosquito Magnet Pioneer is an effective mosquito trap; but it has a critical flaw:
+The Mosquito Magnet Pioneer is an effective mosquito trap, but it has a critical flaw:
 It keeps stopping, annoyingly frequently, for numerous different reasons.
 
 Some reasons why the trap can stop working:
@@ -14,22 +14,22 @@ Some reasons why the trap can stop working:
 * It's a little bit too cold overnight
 * It just stops sometimes for no apparent reason and works after restarting
 
-When the trap decides to stop, obviously it no longer works. And you have no idea why it stopped, it does not tell you.
+When the trap decides to stop, obviously it no longer works. You have no idea why it stopped, there is no indicator for the type of failure.
 When you restart the trap, it does not stop immediately, it runs for about 20 minutes before stopping again.
 Typically you'd have to test different solutions, restarting the trap, waiting for it to stop again.
 You have to run in and out, checking on the trap to see if it's running, restarting it and trying different fixes.
-This can take a couple of days in each instance until the reason for the fix.
+This can take a couple of days in each instance until the correct fix is found.
 
 These stoppages can happen several times during the mosquito season, and while it's going on, you're not catching
 mosquitoes, so the population is not kept in check.
 
 ## The solution
-The watchdog device descibed here will monitor the mosquito trap by reading the current consumption. If the trap
-is detected as stopped (current drops to near zero), the watchdog device will cycle the power off and on again
-to restart it.
+The watchdog device descibed here will monitor the mosquito trap by reading the current flowing from the transformer. If the current drops to near zero, the trap is assumed to have stopped, and
+the watchdog device will cycle the power off and on again to restart it.
 
-This obviously does not fix the underlying problem such as empty propane tank. But it does fix random stoppages
-in many cases. Even for the persistent issues, it will keep the trap running, since the trap typically runs for
+This obviously does not fix the underlying problem such as an empty propane tank. But it does fix random stoppages
+in many cases. Even for the persistent issues, it will keep the trap running.
+After startup, the trap typically runs for
 about 20 minutes before it stops, and at that point the watchdog will restart it again.
 
 Keeping the trap running despite being out of propane has the advantage that it will keep catching mosquitoes,
@@ -37,7 +37,8 @@ and the mosquitoes already caught cannot escape the net. Although the effecitven
 propane, it does still attract and catch mosquitoes due to the R-Octenol chemical attractant.
 
 Using this watchdog also makes it easier and more convenient to diagnose and fix problems. It is no longer necessary
-to run in and out to check and power cycle the trap manually. The power cycling will happen automatically, and
+to run in and out of the house all day to check and power cycle the trap manually.
+The power cycling will happen automatically, and
 by using the watchdog LCD screen, the status can be checked from indoors.
 
 ## Description
