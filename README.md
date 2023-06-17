@@ -52,3 +52,15 @@ The current is read by the Arduino at specified intervals. If the current drops 
 the trap is off, the power is cycled off and on again.
 
 A character LCD panel can be connected to the Arduino to monitor the status at a glance.
+
+## Arduino libraries needed
+* [StateMachine by Jose Rullan](http://github.com/jrullan/StateMachine) (install via Arduino Studio Library Manager)
+* LiquidCrystal_PCF8574 by Matthias Hertel (install via Arduino Studio Library Manager)
+* [Filters by Jonathan Driscoll](https://github.com/JonHub/Filters) (install manually by downloading or cloning, and copying into the Arduino Studio library folder)
+
+## Components used
+* Arduino Uno
+* [AC/DC current sensor ACS712](https://www.electrokit.com/produkt/stromsensor-acs712-5a/)
+* [Relay module](https://www.electrokit.com/produkt/relakort-5v-opto-isolerat/)
+* [HD44780 compatible 16x1 character LCD](https://www.electrokit.com/produkt/lcd-1x16-tecken-jhd161a-tn/)
+* [I2C interface for LCD](https://www.electrokit.com/produkt/i2c-interface-for-lcd/)
