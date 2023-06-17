@@ -3,6 +3,7 @@
 #include <StateMachine.h>
 #include <Filters.h>
 #define Current_sensor A0  // The sensor analog input pin
+#define MIN(a,b) (((a)<(b))?(a):(b))
 
 const int STATE_DELAY = 30;                    // delay between each iteration of the main loop
 const float testFrequency = 50;                // test signal frequency (Hz)
@@ -51,7 +52,7 @@ void setup() {
 
   if (error == 0) {
     Serial.println(": LCD found.");
-    lcd.begin(16, 1); // initialize the lcd
+    lcd.begin(16, 1, Wire); // initialize the lcd
     lcd.setBacklight(128);
   } else {
     Serial.println(": LCD not found.");
@@ -59,6 +60,8 @@ void setup() {
   
   inputStats.setWindowSecs( windowLength );
 }
+
+bool alternateFlag = false;
 
 void loop() {
   ACS_Value = analogRead(Current_sensor);  // read the analog in value:
@@ -71,10 +74,16 @@ void loop() {
   
       lcd.home();
       lcd.clear();
-      lcd.print(Amps_TRMS,1);
-      lcd.print("A ");
-      lcd.print(stateMsg);
-      lcd.print("12345678");
+
+      if (machine.currentState == 0 && alternateFlag) {
+        printElapsedString();
+      }
+      else {
+        lcd.print(Amps_TRMS,1);
+        lcd.print("A ");
+        lcd.print(stateMsg);
+      }
+      alternateFlag = !alternateFlag;
     }
   
   machine.run();
@@ -135,4 +144,29 @@ bool transition_wait10(){
     return true;
   }
   return false;
+}
+
+void printElapsedString() {
+  unsigned long elapsedSeconds = (millis() - lastTransitionTime)/1000;
+  unsigned int seconds = elapsedSeconds % 60;
+  unsigned int minutes = (elapsedSeconds/60) % 60;
+  unsigned int hours = (elapsedSeconds/3600) % 24;
+  unsigned int days = MIN(elapsedSeconds/86400, 99);
+  
+  char buf[3];
+  if (days > 0) {
+    sprintf(buf, "%02u", days);
+    lcd.print(buf);
+    lcd.print("d");
+  }
+  sprintf(buf, "%02u", hours);
+  lcd.print(buf);
+  lcd.print(":");
+  sprintf(buf, "%02u", minutes);
+  lcd.print(buf);
+  if (days == 0) {
+    lcd.print(":");
+    sprintf(buf, "%02u", seconds);
+    lcd.print(buf);
+  }
 }
