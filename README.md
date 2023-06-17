@@ -55,7 +55,7 @@ A character LCD panel can be connected to the Arduino to monitor the status at a
 
 ## Arduino libraries needed
 * [StateMachine by Jose Rullan](http://github.com/jrullan/StateMachine) (install via Arduino Studio Library Manager)
-* LiquidCrystal_PCF8574 by Matthias Hertel (install via Arduino Studio Library Manager)
+* [LiquidCrystal_PCF8574 by Matthias Hertel](https://github.com/mathertel/LiquidCrystal_PCF8574) (install via Arduino Studio Library Manager)
 * [Filters by Jonathan Driscoll](https://github.com/JonHub/Filters) (install manually by downloading or cloning, and copying into the Arduino Studio library folder)
 
 ## Components used
@@ -64,3 +64,25 @@ A character LCD panel can be connected to the Arduino to monitor the status at a
 * [Relay module](https://www.electrokit.com/produkt/relakort-5v-opto-isolerat/)
 * [HD44780 compatible 16x1 character LCD](https://www.electrokit.com/produkt/lcd-1x16-tecken-jhd161a-tn/)
 * [I2C interface for LCD](https://www.electrokit.com/produkt/i2c-interface-for-lcd/)
+
+You can use other combinations of components, of course.
+Make sure the current sensor can tolerate 3 A and is suitable for AC (not all are).
+Likewise, the relay must be able to switch 3 A, 12 V AC.
+
+## Display
+The LCD shows current (A), status, and elapsed time since last power off/on cycle.
+
+The current is typically about 2.8 A at full power -- when the heating element (?) is on.
+When only the fan is running, the current is about 0.8 A.
+When the Mosquito Magnet turns itself off, the current is about 0.1 A.
+
+The "status" display is one of the following:
+* `On`: The power is on, and the Mosquito Magnet is drawing normal current.
+* `On_`: The power is on, but the Mosquito Magnet is dawing less than the expected current. The watchdog will switch the power off within a few seconds unless the current increases.
+* `Off`: The watchdog has switched the power off and is waiting a few seconds before switching back on.
+* `On^`: The watchdog has just switched the power on and is waiting a few seconds for current to stabilize before transitioning back to `On` status.
+
+## Notes
+My LCD has a fault: It is a 16x1 character display, but only the first 8 characters work.
+As a workaround, I am alternating between showing elapsed time and current.
+If you have a functional display of 16x1 or larger, you can display both at the same time.
